@@ -1,0 +1,110 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<h1 class="text-center">{{title}}</h1>
+<ul class="list-articles row py-4">
+  {% for p in posts %}
+	<div class="col-12 col-md-6 col-lg-4">
+	  <li class="content-card">
+	    <div class="article-panel">
+		  <p class="first">Категория: {{p.cat}}</p>
+		  <p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+		</div>
+
+		{% if p.photo %}
+		  <p><img src="{{p.photo.url}}"></p>
+		{% endif %}
+
+		<h2>{{p.title}}</h2>
+
+		{% autoescape on %}
+		  {{p.content|linebreaks|truncatewords:25}}
+		{% endautoescape %}
+
+		<div class="clear"></div>
+		<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+	  </li>
+	</div>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% block paginator %}
+  {% if page_obj.has_other_pages %}
+    <ul class="list-pages pb-4">
+
+      {% if page_obj.has_previous %}
+        <li class="page-num">
+          <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        </li>
+      {% endif %}
+
+      {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+          <li class="page-num page-num-selected">{{ p }}</li>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+          <li class="page-num">
+              <a href="?page={{ p }}">{{ p }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+        </li>
+      {% endif %}
+
+    </ul>
+  {% endif %}
+{% endblock %}
+
+
+{% block banner %}
+  <a class="banner" href="{% url 'contact' %}"><img src="{% static 'catalog/images/' %}banner.webp"></a>
+{% endblock %}
+
+
+{% block new %}
+<div class="title">Новинки</div>
+<div class="slider">
+
+	{% for p in new %}
+	<table class="slider-card">
+		<tr><th><a href="{{p.get_absolute_url}}"><img src="{{p.photo.url}}"></a></th></tr>
+		<tr><th><a class="slider-category" href="{{p.cat.get_absolute_url}}">{{p.cat|upper}}</a></th></tr>
+		<tr><th class="slider-title"><a href="{{p.get_absolute_url}}">{{p.title}}</a></th></tr>
+		<tr><th><p class="slider-price">от {{p.price}} грн</p></th></tr>
+		<tr>
+			<th class="slider-actions">
+				<a href="#">В избранное</a>
+				<a href="#">Купить</a>
+			</th>
+		</tr>
+		<tr><th><a class="slider-details" href="{{p.get_absolute_url}}">Подробнее</a></th></tr>
+	</table>
+	{% endfor %}
+
+</div>
+<hr class="slider-line">
+{% endblock %}
+
+
+{% block instagram %}
+<div class="title-center">Ищите вдохновение в Инстаграм</div>
+<div class="subtitle-center">@mebel_project</div>
+<div class="container-xxl" style="padding: 0;">
+  <div id="scroll2" class="layer">
+
+	{% for i in instagram %}
+	  <div class="inst-card">
+		  <a href="{{i.link}}"><img src="{% static 'catalog/images/' %}{{i.url_name}}.jpeg" alt="{{i.url_name}}"></a>
+	  </div>
+	{% endfor %}
+
+  </div>
+</div>
+{% endblock %}

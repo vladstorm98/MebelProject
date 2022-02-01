@@ -1,0 +1,11 @@
+.front {
+	max-width: 100%;
+	display: flex;
+	padding: 25px 12px;
+	
+}
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0; 
+}

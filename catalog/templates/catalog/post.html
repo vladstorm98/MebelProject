@@ -1,0 +1,62 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-card">
+  <h1>{{post.title}}</h1>
+
+  {% if post.photo %}
+  <p><img class="img-article-left" src="{{post.photo.url}}"></p>
+  {% endif %}
+
+  {{post.content|linebreaks}}
+
+</div>
+{% endblock %}
+
+
+{% block banner %}
+  <a class="banner" href="{% url 'contact' %}"><img src="{% static 'catalog/images/' %}banner.webp"></a>
+{% endblock %}
+
+
+{% block new %}
+<div class="title">Новинки</div>
+<div class="slider">
+
+	{% for p in new %}
+	<table class="slider-card">
+		<tr><th><a href="{{p.get_absolute_url}}"><img src="{{p.photo.url}}"></a></th></tr>
+		<tr><th><a class="slider-category" href="{{p.cat.get_absolute_url}}">{{p.cat|upper}}</a></th></tr>
+		<tr><th class="slider-title"><a href="{{p.get_absolute_url}}">{{p.title}}</a></th></tr>
+		<tr><th><p class="slider-price">от {{p.price}} грн</p></th></tr>
+		<tr>
+			<th class="slider-actions">
+				<a href="#">В избранное</a>
+				<a href="#">Купить</a>
+			</th>
+		</tr>
+		<tr><th><a class="slider-details" href="{{p.get_absolute_url}}">Подробнее</a></th></tr>
+	</table>
+	{% endfor %}
+
+</div>
+<hr class="slider-line">
+{% endblock %}
+
+
+{% block instagram %}
+<div class="title-center">Ищите вдохновение в Инстаграм</div>
+<div class="subtitle-center">@mebel_project</div>
+<div class="container-xxl" style="padding: 0;">
+  <div id="scroll2" class="layer">
+
+	{% for i in instagram %}
+	  <div class="inst-card">
+		  <a href="{{i.link}}"><img src="{% static 'catalog/images/' %}{{i.url_name}}.jpeg" alt="{{i.url_name}}"></a>
+	  </div>
+	{% endfor %}
+
+  </div>
+</div>
+{% endblock %}

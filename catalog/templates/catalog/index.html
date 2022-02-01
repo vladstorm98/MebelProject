@@ -1,0 +1,134 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+
+{% block front %}
+<div id="carousel-front" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+  	  <img src="{% static 'catalog/images/background-1.jpg' %}" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'catalog/images/background-2.jpg' %}" alt="...">
+    </div>
+    <div class="carousel-item">
+	  <img src="{% static 'catalog/images/background-5.jpg' %}" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-front" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carousel-front" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock %}
+
+
+{% block features %}
+<div class="container-xxl" style="padding: 0;">
+  <div id="scroll1" class="layer">
+
+	{% for f in features %}
+	  <div class="layer-card">
+		<p>{{f.title}}</p>
+		<img src="{% static 'catalog/images/' %}{{f.url_name}}.webp" alt="{{f.url_name}}">
+	  </div>
+	{% endfor %}
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block most-popular %}
+<div class="title">Популярные товары</div>
+<div class="slider">
+
+  {% for p in most_popular %}
+	<table class="slider-card">
+	  <tr><th><a href="{{p.get_absolute_url}}"><img src="{{p.photo.url}}"></a></th></tr>
+	  <tr><th><a class="slider-category" href="{{p.cat.get_absolute_url}}">{{p.cat|upper}}</a></th></tr>
+	  <tr><th class="slider-title"><a href="{{p.get_absolute_url}}">{{p.title}}</a></th></tr>
+	  <tr><th><p class="slider-price">от {{p.price}} грн</p></th></tr>
+	  <tr>
+		<th class="slider-actions">
+		  <a href="#">В избранное</a>
+		  <a href="#">Купить</a>
+		</th>
+	  </tr>
+	  <tr><th><a class="slider-details" href="{{p.get_absolute_url}}">Подробнее</a></th></tr>
+	</table>
+  {% endfor %}
+
+</div>
+<hr class="slider-line">
+{% endblock %}
+
+
+{% block banner %}
+  <a class="banner" href="{% url 'contact' %}"><img src="{% static 'catalog/images/' %}banner.webp"></a>
+{% endblock %}
+
+
+{% block new %}
+<div class="title">Новинки</div>
+<div class="slider">
+
+  {% for p in new %}
+	<table class="slider-card">
+	  <tr><th><a href="{{p.get_absolute_url}}"><img src="{{p.photo.url}}"></a></th></tr>
+	  <tr><th><a class="slider-category" href="{{p.cat.get_absolute_url}}">{{p.cat|upper}}</a></th></tr>
+	  <tr><th class="slider-title"><a href="{{p.get_absolute_url}}">{{p.title}}</a></th></tr>
+	  <tr><th><p class="slider-price">от {{p.price}} грн</p></th></tr>
+	  <tr>
+		<th class="slider-actions">
+		  <a href="#">В избранное</a>
+		  <a href="#">Купить</a>
+		</th>
+	  </tr>
+	  <tr><th><a class="slider-details" href="{{p.get_absolute_url}}">Подробнее</a></th></tr>
+	</table>
+  {% endfor %}
+
+</div>
+<hr class="slider-line">
+{% endblock %}
+
+
+{% block advantages %}
+<div class="title-center">Мы создаем диваны для настоящей жизни</div>
+<div class="row">
+
+  {% for a in advantages %}
+	<div class="col-12 col-md-6 col-lg-3 advantage">
+	  <img src="{% static 'catalog/images/' %}{{a.url_name}}.webp" alt="{{a.url_name}}">
+	  <p class="advantage-title">{{a.title}}</p>
+	  <p class="advantage-content">{{a.content}}</p>
+	</div>
+  {% endfor %}
+
+</div>
+
+{% endblock %}
+
+
+{% block instagram %}
+<div class="title-center">Ищите вдохновение в Инстаграм</div>
+<div class="subtitle-center">@mebel_project</div>
+<div class="container-xxl" style="padding: 0;">
+  <div id="scroll2" class="layer">
+
+	{% for i in instagram %}
+	  <div class="inst-card">
+		  <a href="{{i.link}}"><img src="{% static 'catalog/images/' %}{{i.url_name}}.jpeg" alt="{{i.url_name}}"></a>
+	  </div>
+	{% endfor %}
+
+  </div>
+</div>
+{% endblock %}
+
+
